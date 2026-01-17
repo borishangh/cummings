@@ -29,7 +29,7 @@ permalink: "./books/{{ book.slug }}.html"
       {% if book.poems and book.poems.length %}
         <div class="poem-tiles">
           {% for p in book.poems %}
-            <a class="poem-tile" href="./books/{{ book.slug }}/{{ p.slug }}.html">
+            <a class="poem-tile" href="./{{ book.slug }}/{{ p.slug }}.html">
               <canvas class="poem-thumbnail" width="150" height="150" 
                       data-poem-text="{{ p.text | safe }}"></canvas>
               <div class="poem-title">{{ p.slug }}</div>
