@@ -54,7 +54,7 @@ body {
 .poem-text { white-space: pre-wrap; line-height: 1.55; font-size: 1rem; }
 
 @media (max-width:420px) {
-  .book-item { flex-basis: 48%; max-width: 48%; }
+  .book-item { flex-basis: 46%; max-width: 46%; }
 }
 
 .poem-canvas-wrapper {
