@@ -1,8 +1,3 @@
-// src/_data/books.js
-// Fetch books index and attach the table-of-contents as `poems` for each public-domain book.
-// For every toc entry, attempt to derive a .json URL and fetch its 'text'.
-// Requires Node 18+ (global fetch). If using older Node, install node-fetch and replace fetch.
-
 const SITE_ORIGIN = "https://cummings.ee";
 
 module.exports = async function() {
@@ -13,11 +8,9 @@ module.exports = async function() {
   }
   const allBooks = await res.json();
 
-  // Only public domain books
   const publicBooks = (Array.isArray(allBooks) ? allBooks : [])
     .filter(b => b && b.public_domain === true);
 
-  // For each book, fetch its book JSON (book.json_url) and then fetch each toc entry's .json
   const booksWithToc = await Promise.all(publicBooks.map(async book => {
     const clone = Object.assign({}, book);
     clone.poems = [];
@@ -33,12 +26,10 @@ module.exports = async function() {
       const bookJson = await r.json();
       if (!Array.isArray(bookJson.toc)) return clone;
 
-      // Map toc entries and resolve poem JSONs
       const poems = await Promise.all(bookJson.toc.map(async entry => {
         const title = entry.name || entry.title || "(untitled)";
         const html_url_raw = entry.html_url || entry.url || null;
 
-        // Resolve html_url to an absolute URL (handles relative paths)
         let html_url = null;
         if (html_url_raw) {
           try {
@@ -48,10 +39,8 @@ module.exports = async function() {
           }
         }
 
-        // derive a .json url from html_url by removing trailing slash and appending .json
         let json_url = null;
         if (html_url) {
-          // ensure no double slashes: take pathname and append .json to path
           try {
             const u = new URL(html_url);
             const pathNoSlash = u.pathname.replace(/\/$/, "");
@@ -61,7 +50,6 @@ module.exports = async function() {
           }
         }
 
-        // attempt to extract slug: entry.slug or last segment of path
         let slug = entry.slug || null;
         if (!slug && html_url) {
           try {
@@ -71,15 +59,12 @@ module.exports = async function() {
             slug = null;
           }
         }
-
-        // fetch poem json text if available
         let text = null;
         if (json_url) {
           try {
             const pr = await fetch(json_url);
             if (pr.ok) {
               const pj = await pr.json();
-              // prefer pj.text, else pj.html, else null
               text = pj.text ?? pj.html ?? null;
             }
           } catch (e) {

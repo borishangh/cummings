@@ -1,6 +1,3 @@
-// src/_data/poems.js
-// Flatten all book.poems into a single array for Eleventy pagination of poem pages.
-
 module.exports = async function() {
   const getBooks = require("./books.js");
   const books = await getBooks();
@@ -8,7 +5,7 @@ module.exports = async function() {
   const poems = [];
   (books || []).forEach(book => {
     (book.poems || []).forEach(p => {
-      if (!p || !p.slug) return; // skip if no slug
+      if (!p || !p.slug) return;
       poems.push({
         title: p.title,
         slug: p.slug,
