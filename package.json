@@ -1,0 +1,13 @@
+{
+  "name": "my-cummings-site",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "@11ty/eleventy": "^1.0.0"
+  },
+  "scripts": {
+    "dev": "npx @11ty/eleventy --serve",
+    "build": "npx @11ty/eleventy",
+    "start": "npm run build && npx serve dist"
+  }
+}
