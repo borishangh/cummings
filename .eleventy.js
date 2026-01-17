@@ -5,6 +5,6 @@ module.exports = function(eleventyConfig) {
       input: "src",
       output: "dist"
     },
-    pathPrefix: "/eecummings/"
+    pathPrefix: "/cummings/"
   };
 };
