@@ -3,7 +3,7 @@ pagination:
   data: books
   size: 1
   alias: book
-permalink: "./books/{{ book.slug }}.html"
+permalink: "/books/{{ book.slug }}.html"
 ---
 <!doctype html>
 <html lang="en">
@@ -11,27 +11,39 @@ permalink: "./books/{{ book.slug }}.html"
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>eecummings › {{ book.title }}</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../public/assets/style.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="{{ '/public/assets/style.css' | url }}" />
 </head>
+
 <body>
   <main class="book-page">
     <nav class="breadcrumbs">
-      <a href="../" class="crumb">eecummings</a>
+      <a href="{{ '/' | url }}" class="crumb">eecummings</a>
       &nbsp;&gt;&nbsp;
       <span class="crumb-current">{{ book.title }}</span>
     </nav>
-
 
     <section id="poems" class="poem-list-section">
       {% if book.poems and book.poems.length %}
         <div class="poem-tiles">
           {% for p in book.poems %}
-            <a class="poem-tile" href="./{{ book.slug }}/{{ p.slug }}.html">
-              <canvas class="poem-thumbnail" width="150" height="150" 
-                      data-poem-text="{{ p.text | safe }}"></canvas>
+            <a
+              class="poem-tile"
+              href="{{ ('/books/' ~ book.slug ~ '/' ~ p.slug ~ '.html') | url }}"
+            >
+              <canvas
+                class="poem-thumbnail"
+                width="150"
+                height="150"
+                data-poem-text="{{ p.text | safe }}"
+              ></canvas>
               <div class="poem-title">{{ p.slug }}</div>
             </a>
           {% endfor %}
@@ -41,7 +53,8 @@ permalink: "./books/{{ book.slug }}.html"
       {% endif %}
     </section>
   </main>
-  <script src="../public/assets/site.js" defer></script>
-  <script src="../public/assets/poem-thumbnails.js" defer></script>
+
+  <script src="{{ '/public/assets/site.js' | url }}" defer></script>
+  <script src="{{ '/public/assets/poem-thumbnails.js' | url }}" defer></script>
 </body>
 </html>

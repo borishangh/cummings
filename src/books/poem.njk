@@ -3,7 +3,7 @@ pagination:
   data: poems
   size: 1
   alias: poem
-permalink: "./books/{{ poem.bookSlug }}/{{ poem.slug }}.html"
+permalink: "/books/{{ poem.bookSlug }}/{{ poem.slug }}.html"
 ---
 <!doctype html>
 <html lang="en">
@@ -11,17 +11,25 @@ permalink: "./books/{{ poem.bookSlug }}/{{ poem.slug }}.html"
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>eecummings › {{ poem.bookTitle }} › {{ poem.title }}</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../public/assets/style.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="{{ '/public/assets/style.css' | url }}" />
 </head>
+
 <body>
   <main class="poem-page">
     <nav class="breadcrumbs">
-      <a href="../../" class="crumb">eecummings</a>
+      <a href="{{ '/' | url }}" class="crumb">eecummings</a>
       &nbsp;&gt;&nbsp;
-      <a href="../books/{{ poem.bookSlug }}.html" class="crumb">{{ poem.bookTitle }}</a>
+      <a href="{{ ('/books/' ~ poem.bookSlug ~ '.html') | url }}" class="crumb">
+        {{ poem.bookTitle }}
+      </a>
       &nbsp;&gt;&nbsp;
       <span class="crumb-current">{{ poem.slug }}</span>
     </nav>
@@ -31,13 +39,14 @@ permalink: "./books/{{ poem.bookSlug }}/{{ poem.slug }}.html"
 
     <article class="poem-body">
       {% if poem.text %}
-        <div class="poem-text">{{ poem.text | safe }}</div>{% else %}
+        <div class="poem-text">{{ poem.text | safe }}</div>
+      {% else %}
         <p>No poem text</p>
       {% endif %}
     </article>
   </main>
 
-  <script src="../public/assets/site.js" defer></script>
-  <script src="../public/assets/poem-canvas.js" defer></script>
+  <script src="{{ '/public/assets/site.js' | url }}" defer></script>
+  <script src="{{ '/public/assets/poem-canvas.js' | url }}" defer></script>
 </body>
 </html>
